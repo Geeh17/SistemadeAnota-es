@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import './App.css';
 
@@ -12,7 +13,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // Pedir permissão para enviar notificações quando o aplicativo é carregado
     this.requestNotificationPermission();
   }
 
@@ -29,7 +29,6 @@ class App extends Component {
         currentNote: '',
       }));
 
-      // Verifique se a anotação contém um lembrete e envie uma notificação
       if (noteWithTimestamp.toLowerCase().includes('lembrete')) {
         this.sendNotification('Lembrete: ' + this.state.currentNote);
       }
@@ -53,7 +52,6 @@ class App extends Component {
         body: message,
       });
 
-      // Você pode adicionar um evento para lidar com o clique na notificação
       notification.onclick = () => {
         console.log('O usuário clicou na notificação.');
       };
@@ -111,7 +109,6 @@ class App extends Component {
 
       reader.onload = (e) => {
         const importedNotes = JSON.parse(e.target.result);
-
         this.setState({ notes: importedNotes });
       };
 
@@ -120,13 +117,6 @@ class App extends Component {
   }
 
   render() {
-    const containerStyle = {
-      backgroundImage: `url('/meu-projeto/src/img/Fundo.jpg')`,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      // Aqui você pode adicionar mais estilos se necessário
-    };
-
     const sortedNotes = [...this.state.notes].sort((a, b) => {
       if (this.state.sortCriteria === 'data') {
         return a.substring(a.lastIndexOf('(')) > b.substring(b.lastIndexOf('(')) ? -1 : 1;
@@ -138,38 +128,42 @@ class App extends Component {
     });
 
     return (
-      <div className="app-container" style={containerStyle}>
-        <h1>Sistema de Anotações</h1>
-        <label>
-          Ordenar por:
-          <select value={this.state.sortCriteria} onChange={this.handleSortChange}>
-            <option value="data">Data</option>
-            <option value="categoria">Categoria</option>
-            <option value="titulo">Título</option>
-          </select>
-        </label>
-        <input
-          type="text"
-          value={this.state.currentNote}
-          onChange={this.handleNoteChange}
-          placeholder="Digite sua anotação"
-        />
-        <button onClick={this.addNote}>Adicionar</button>
-        <button onClick={this.exportNotes}>Exportar Notas</button>
-        <input
-          type="file"
-          accept=".json"
-          onChange={this.importNotes}
-        />
-        <ul>
+      <div style={{ minHeight: '100vh', padding: '20px' }}>
+        <div className="container">
+          <h1>Sistema de Anotações</h1>
+
+          <label>
+            Ordenar por:
+            <select value={this.state.sortCriteria} onChange={this.handleSortChange}>
+              <option value="data">Data</option>
+              <option value="categoria">Categoria</option>
+              <option value="titulo">Título</option>
+            </select>
+          </label>
+
+          <input
+            type="text"
+            value={this.state.currentNote}
+            onChange={this.handleNoteChange}
+            placeholder="Digite sua anotação"
+          />
+
+          <div className="flex-actions">
+            <button onClick={this.addNote}>Adicionar</button>
+            <button onClick={this.exportNotes}>Exportar</button>
+            <input type="file" accept=".json" onChange={this.importNotes} />
+          </div>
+
           {sortedNotes.map((note, index) => (
-            <li key={index}>
-              {note}
-              <button onClick={() => this.editNote(index)}>Editar</button>
-              <button onClick={() => this.deleteNote(index)}>Excluir</button>
-            </li>
+            <div className="note" key={index}>
+              <p>{note}</p>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
+                <button onClick={() => this.editNote(index)}>Editar</button>
+                <button onClick={() => this.deleteNote(index)}>Excluir</button>
+              </div>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
     );
   }
