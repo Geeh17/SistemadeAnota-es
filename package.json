@@ -1,6 +1,8 @@
 {
-  "name": "meu-projeto",
-  "version": "0.1.0",
+  "name": "sistema-de-anotacoes",
+  "version": "1.0.0",
+  "description": "Sistema de anotações em React para criar, editar, organizar, exportar e importar notas.",
+  "author": "Geraldo Luiz",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",

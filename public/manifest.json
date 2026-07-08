@@ -1,0 +1,15 @@
+{
+  "short_name": "Anotações",
+  "name": "Sistema de Anotações",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#182238",
+  "background_color": "#eef1f6"
+}
